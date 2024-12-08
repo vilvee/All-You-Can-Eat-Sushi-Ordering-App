@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Data\BubbleTea.csv" />
+    <None Remove="Assets\Data\Categories.csv" />
+    <None Remove="Assets\Data\Combos.csv" />
+    <None Remove="Assets\Data\order-report.csv" />
+    <None Remove="Assets\Data\Sushi.csv" />
+    <None Remove="Assets\Images\assortedPlate1.jpg" />
+    <None Remove="Assets\Images\assortedPlate2.jpg" />
+    <None Remove="Assets\Images\bubbleBerry.jpg" />
+    <None Remove="Assets\Images\bubbleBlackTea.jpg" />
+    <None Remove="Assets\Images\bubbleCoffee.jpg" />
+    <None Remove="Assets\Images\bubbleDew.jpg" />
+    <None Remove="Assets\Images\bubbleDouble.jpg" />
+    <None Remove="Assets\Images\bubbleLychee.jpg" />
+    <None Remove="Assets\Images\bubbleMango.jpg" />
+    <None Remove="Assets\Images\bubblePassion.jpg" />
+    <None Remove="Assets\Images\bubblePeach.jpg" />
+    <None Remove="Assets\Images\bubbleSea.jpg" />
+    <None Remove="Assets\Images\bubbleStrawLem.jpg" />
+    <None Remove="Assets\Images\bubbleTrio.jpg" />
+    <None Remove="Assets\Images\californiaRoll.jpg" />
+    <None Remove="Assets\Images\dynamiteRoll.jpg" />
+    <None Remove="Assets\Images\eelSashimi.jpg" />
+    <None Remove="Assets\Images\kamikazeRoll.jpg" />
+    <None Remove="Assets\Images\nigiriSquareSalmon.jpg" />
+    <None Remove="Assets\Images\salmonRoll.jpg" />
+    <None Remove="Assets\Images\salmonRoll1.jpg" />
+    <None Remove="Assets\Images\SplashScreen.gif" />
+    <None Remove="Assets\Images\SplashScreen.mp4" />
+    <None Remove="Assets\Images\sushiLogo - Copy.png" />
+    <None Remove="Assets\Images\sushiLogo.ico" />
+    <None Remove="Assets\Images\sushiLogo.png" />
+    <None Remove="Assets\Images\sushiMango.jpg" />
+    <None Remove="Assets\Images\tunaNigiri.jpg" />
+    <None Remove="Assets\Images\tunaRoll.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+    <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Data\BubbleTea.csv" />
+    <Resource Include="Assets\Data\Categories.csv" />
+    <Resource Include="Assets\Data\Combos.csv" />
+    <Resource Include="Assets\Images\SplashScreen.gif" />
+    <Resource Include="Assets\Images\SplashScreen.mp4" />
+    <Resource Include="bin\Debug\net8.0-windows\order-report.csv" />
+    <Resource Include="Assets\Data\Sushi.csv" />
+    <Resource Include="Assets\Images\assortedPlate1.jpg" />
+    <Resource Include="Assets\Images\assortedPlate2.jpg" />
+    <Resource Include="Assets\Images\bubbleBerry.jpg" />
+    <Resource Include="Assets\Images\bubbleBlackTea.jpg" />
+    <Resource Include="Assets\Images\bubbleCoffee.jpg" />
+    <Resource Include="Assets\Images\bubbleDew.jpg" />
+    <Resource Include="Assets\Images\bubbleDouble.jpg" />
+    <Resource Include="Assets\Images\bubbleLychee.jpg" />
+    <Resource Include="Assets\Images\bubbleMango.jpg" />
+    <Resource Include="Assets\Images\bubblePassion.jpg" />
+    <Resource Include="Assets\Images\bubblePeach.jpg" />
+    <Resource Include="Assets\Images\bubbleSea.jpg" />
+    <Resource Include="Assets\Images\bubbleStrawLem.jpg" />
+    <Resource Include="Assets\Images\bubbleTrio.jpg" />
+    <Resource Include="Assets\Images\californiaRoll.jpg" />
+    <Resource Include="Assets\Images\dynamiteRoll.jpg" />
+    <Resource Include="Assets\Images\eelSashimi.jpg" />
+    <Resource Include="Assets\Images\kamikazeRoll.jpg" />
+    <Resource Include="Assets\Images\nigiriSquareSalmon.jpg" />
+    <Resource Include="Assets\Images\salmonRoll.jpg" />
+    <Resource Include="Assets\Images\salmonRoll1.jpg" />
+    <Resource Include="Assets\Images\sushiLogo - Copy.png" />
+    <Resource Include="Assets\Images\sushiLogo.ico" />
+    <Resource Include="Assets\Images\sushiMango.jpg" />
+    <Resource Include="Assets\Images\tunaNigiri.jpg" />
+    <Resource Include="Assets\Images\tunaRoll.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\sushiLogo.png" />
+  </ItemGroup>
+
+ 
+
+</Project>

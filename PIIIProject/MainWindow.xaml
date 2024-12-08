@@ -1,0 +1,295 @@
+﻿<views:BaseWindow x:Class="PIIIProject.MainWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                  xmlns:views="clr-namespace:PIIIProject.Views"
+                  xmlns:internal="clr-namespace:MaterialDesignThemes.Wpf.Internal;assembly=MaterialDesignThemes.Wpf"
+                  xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+                  Title="MainWindow" 
+                  MinHeight="700" MinWidth="1250"
+                  WindowStartupLocation="CenterScreen"
+                  WindowStyle="None"
+                  AllowsTransparency="True"
+                  TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                  TextElement.FontWeight="Regular"
+                  TextElement.FontSize="13"
+                  TextOptions.TextFormattingMode="Ideal"
+                  TextOptions.TextRenderingMode="Auto"
+                  Background="{x:Null}"
+                  FontFamily="{DynamicResource MaterialDesignFont}">
+    <!-- Sets up the basic window properties like size, style, and background -->
+
+    <!-- Window Resources -->
+    <views:BaseWindow.Resources>
+        <!-- Scrollbar Style -->
+        <Style x:Key="ScrollbarStyle" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="#E6E6E6"/>
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Border CornerRadius="5" Background="{TemplateBinding Background}"/>
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb Background="#A0A0A0" BorderThickness="0"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Defines a custom style for the scrollbar -->
+    </views:BaseWindow.Resources>
+
+
+    <!-- Layout -->
+    <Grid MouseDown="Grid_MouseDown" Name="MainGrid">
+        <wpf:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" Name="DrawerHost" 
+                        LeftDrawerCornerRadius="0 20 20 0"
+                        OpenMode="Modal">
+            <wpf:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="220" Width="319">
+                    <DockPanel Margin="16"
+                                  DockPanel.Dock="Top"
+                                  LastChildFill="False">
+                        <Button x:Name="MenuOpen"
+                                Width="56"
+                                Height="56"
+                                Click="MenuOpen_Click"
+                                HorizontalAlignment="Right"
+                                DockPanel.Dock="Top"
+                                Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}">
+                            <materialDesign:PackIcon Width="36"
+                                Height="36"
+                                Kind="MenuOpen" />
+                        </Button>
+                        <StackPanel>
+                            <!-- List of Selected Items -->
+                            <DataGrid x:Name="SelectedItemsList" Grid.Column="2" 
+                                      Margin="10" Padding="5"
+                                      Style="{StaticResource MaterialDesignDataGrid}"
+                                      HeadersVisibility="Column"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True"
+                                      SelectionMode="Single"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      MouseDoubleClick="ChangeSelection_DoubleClick"
+                                      ItemsSource="{Binding Path=Order}">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="NameColumn" Header="Product" Width="2*" Binding="{Binding Name}" />
+                                    <DataGridTextColumn x:Name="QuantityColumn" Header="Quantity" Width="*" Binding="{Binding Quantity}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <!-- Send Order Button-->
+                            <Button x:Name="SendOrderButton" Grid.Column="2" Grid.Row="2"
+                                    Content="Send Order"
+                                    Margin="10" 
+                                    Background="#F7F7F7"
+                                    Foreground="#333333"
+                                    BorderThickness="0"
+                                    FontSize="14"
+                                    Click="BtnSendOrder_Click"
+                                    Cursor="Hand"/>
+
+
+                        </StackPanel>
+                    </DockPanel>
+                </DockPanel>
+            </wpf:DrawerHost.LeftDrawerContent>
+                <wpf:Card  Margin="10" UniformCornerRadius="15" BorderBrush="#1E000000" >
+            <!-- Custom Title Bar -->
+            <DockPanel>
+                <Border DockPanel.Dock="Top"
+                        MouseLeftButtonDown="TitlebarDragMaximize_LeftButtonDown" >
+                    <!-- Defines a custom title bar with specified properties and event handler for dragging -->
+                    <wpf:ColorZone Padding="16" Mode="PrimaryMid">
+                        <DockPanel >
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" >
+                                <!-- Adds a close button with a specific style and click event -->
+
+                                <!-- Minimize Button -->
+                                <Button Margin="8,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                     Click="BtnMinimize_Click" Foreground="White">
+                                    <wpf:PackIcon Kind="WindowMinimize" />
+                                </Button>
+                                <!-- Adds a minimize button -->
+
+                                <!-- Maximize Button -->
+                                <Button Margin="8,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                     Click="BtnMaximize_Click"  Foreground="White">
+                                    <wpf:PackIcon Kind="WindowMaximize" />
+                                </Button>
+                                <!-- Close Button -->
+                                <Button Margin="8,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                     Click="BtnClose_Click" >
+                                    <materialDesign:PackIcon Kind="WindowClose" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+
+                            <materialDesign:Badged VerticalAlignment="Center"
+                                Badge="{Binding  ItemsCount}">
+                                <ToggleButton VerticalAlignment="Center" DockPanel.Dock="left" Margin="10,0,0,0" x:Name="MenuToggleButton" 
+                                              AutomationProperties.Name="HamburgerToggleButton" 
+                                              materialDesign:BadgedAssist.BadgeBackground ="#930006"   
+                                              Click="MenuToggleButton_OnClick"
+                                             
+                                              IsChecked="False"
+                                              Style="{StaticResource MaterialDesignHamburgerToggleButton}"/>
+                                </materialDesign:Badged>
+
+                                <!-- Search Box -->
+                            <TextBox x:Name="SearchBox"
+                                     Margin="16,4,16,4"
+                                     VerticalAlignment="Center"
+                                     materialDesign:HintAssist.Hint="Search"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     materialDesign:TextFieldAssist.HasClearButton="True"
+                                     materialDesign:TextFieldAssist.TextFieldCornerRadius="8"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     GotFocus="SearchBox_GotFocus"
+                                     LostFocus="SearchBox_LostFocus"
+                                     TextChanged="SearchBox_TextChanged"
+                                     Foreground="#1e1137"
+                                     Background="White"/>
+                        </DockPanel>
+                    </wpf:ColorZone>
+                </Border>
+
+                    <!-- SIDEBAR -->
+                        <Grid x:Name="SideBar"
+                              Width="80"
+                              Background="{DynamicResource MaterialDesignPaper}"
+                              Visibility="{Binding ElementName=drawer, Path=IsLeftDrawerOpen, Converter={StaticResource InverseBoolToVisConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0" x:Name="AdminButton" Click="AdminButton_Click"
+                                  Width="56"
+                                  Height="56"
+                                  Margin="0,25,0,60"
+                                  materialDesign:ButtonAssist.CornerRadius="16"
+                                  Background="{DynamicResource SecondaryHueMidBrush}"
+                                  BorderThickness="0"
+                                  Foreground="{DynamicResource SecondaryHueMidBrushForeground}">
+                                <materialDesign:PackIcon Width="24"
+                                 Height="24"
+                                 Kind="Administrator" />
+                            </Button>
+                        </Grid>
+
+
+                        <!-- Main Content -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <!--Main Menu-->
+                    <Grid Grid.Column="1" Grid.RowSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+
+                            <!-- Category Tabs -->
+                        <ItemsControl x:Name="CategoryTabs" HorizontalAlignment="Center" Grid.Row="0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <DockPanel LastChildFill="False">
+                                    </DockPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Margin="20,10" 
+                                               Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                           VerticalAlignment="Center" 
+                                           MouseLeftButtonUp="CategoryTab_Click" 
+                                           Cursor="Hand">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+
+                        <!-- Menu Item Display -->
+                        <ListView x:Name="MenuItemsDisplay" Grid.Row="1"
+                          Margin="10 , 0, 10, 0" Padding="5,0,5,5"
+                          Background="Transparent"
+                          BorderBrush="{x:Null}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ScrollViewer.ScrollChanged="OnMenuItemsDisplayScrollChanged"
+                        >
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollbarStyle}"/>
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Margin" Value="5"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="5">
+                                                    <ContentPresenter />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="3"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Rectangle MinWidth="200" MinHeight="150" RadiusX="10" RadiusY="10" Margin="0,0,0,5" MouseLeftButtonUp="ItemDetails_Click" Cursor="Hand">
+                                            <Rectangle.Fill>
+                                                <ImageBrush ImageSource="{Binding IconImage}" Stretch="UniformToFill" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <!-- Category Names -->
+                                            <TextBlock  Text="{Binding Name}" FontWeight="Bold" FontSize="32"   />
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                        </ListView>
+                        <!-- Displays menu items -->
+                    </Grid>
+                </Grid>
+            </DockPanel>
+        </wpf:Card>
+  
+  
+    </wpf:DrawerHost>
+  </Grid>
+</views:BaseWindow>
+  

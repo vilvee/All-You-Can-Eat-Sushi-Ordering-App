@@ -1,0 +1,137 @@
+﻿<views:BaseWindow x:Class="PIIIProject.Views.Report"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:PIIIProject.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="MainWindow" Height="650" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+	<!-- Sets up the basic window properties like size, style, and background -->
+
+	<!-- Window Resources -->
+	<views:BaseWindow.Resources>
+		<!-- Style for Window Icons (Minimize, Maximize, Close) -->
+		<Style x:Key="WindowIconStyle" TargetType="{x:Type Hyperlink}">
+			<Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="Foreground" Value="#4C4C4C" />
+		</Style>
+		<!-- Defines a style for the window control icons -->
+
+		<!-- Scrollbar Style -->
+		<Style x:Key="ScrollbarStyle" TargetType="{x:Type ScrollBar}">
+			<Setter Property="Background" Value="#E6E6E6"/>
+			<Setter Property="Width" Value="10"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ScrollBar}">
+						<Grid>
+							<Border CornerRadius="5" Background="{TemplateBinding Background}"/>
+							<Track x:Name="PART_Track" IsDirectionReversed="True">
+								<Track.Thumb>
+									<Thumb Background="#A0A0A0" BorderThickness="0"/>
+								</Track.Thumb>
+							</Track>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<!-- Defines a custom style for the scrollbar -->
+	</views:BaseWindow.Resources>
+
+
+	<!-- Layout -->
+	<Grid>
+		<!-- Custom Title Bar -->
+		<DockPanel>
+			<Border DockPanel.Dock="Top" Background="#E6E6E6"
+                        MouseLeftButtonDown="TitlebarDragMaximize_LeftButtonDown" >
+                <materialDesign:ColorZone Padding="16" Mode="PrimaryMid">
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <!-- Adds a close button with a specific style and click event -->
+                        <!-- Minimize Button -->
+                        <Button Margin="8,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                Click="BtnMinimize_Click" Foreground="White">
+                            <materialDesign:PackIcon Kind="WindowMinimize" />
+                        </Button>
+                        <!-- Maximize Button -->
+                        <Button Margin="8,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                Click="BtnMaximize_Click"  Foreground="White">
+                            <materialDesign:PackIcon Kind="WindowMaximize" />
+                        </Button>
+                        <!-- Close Button -->
+                        <Button Margin="8,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                Click="BtnClose_Click" >
+                            <materialDesign:PackIcon Kind="WindowClose" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+
+
+                </materialDesign:ColorZone>
+            </Border>
+
+			<!-- Main Content -->
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="15"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="15"/>
+				</Grid.RowDefinitions>
+
+				<!-- List of Selected Items -->
+				<DataGrid x:Name="ReportGrid" Grid.Row="1"
+                          Margin="10" Padding="5"
+                          Background="#FFFFFF"
+                          BorderBrush="#CCCCCC"
+                          HeadersVisibility="Column"
+                          AutoGenerateColumns="True"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          HorizontalGridLinesBrush="#E0E0E0"
+                          VerticalGridLinesBrush="{x:Null}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          ItemsSource="{Binding Path=OrderItems}">
+					<!-- DataGrid for displaying report data -->
+
+					<!-- Column Definitions/ Cell Styles -->
+					<DataGrid.Resources>
+						<Style TargetType="DataGridCell">
+							<Setter Property="Foreground" Value="#333333" />
+							<Setter Property="BorderBrush" Value="{x:Null}" />
+							<Setter Property="Padding" Value="8" />
+							<Style.Triggers>
+								<Trigger Property="IsSelected" Value="True">
+									<Setter Property="Background" Value="#E8F5E9" />
+									<Setter Property="Foreground" Value="#333333" />
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+						<!-- Styles for DataGrid cell -->
+						<Style TargetType="DataGridColumnHeader">
+							<Setter Property="Background" Value="#F7F7F7"/>
+							<Setter Property="Foreground" Value="#333333"/>
+							<Setter Property="FontSize" Value="14"/>
+							<Setter Property="FontWeight" Value="SemiBold"/>
+							<Setter Property="Padding" Value="10"/>
+							<Setter Property="Height" Value="40"/>
+							<Setter Property="BorderBrush" Value="#CCCCCC"/>
+							<Setter Property="BorderThickness" Value="0,0,0,1"/>
+						</Style>
+						<!-- Styles for DataGrid column header -->
+					</DataGrid.Resources>
+				</DataGrid>
+			</Grid>
+		</DockPanel>
+	</Grid>
+</views:BaseWindow>

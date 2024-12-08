@@ -1,0 +1,91 @@
+﻿<views:BaseWindow x:Class="PIIIProject.Views.MenuItemDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:PIIIProject.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Height="500" Width="400"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#FFFFFF"
+        Loaded="Window_Loaded">
+	<!-- Sets up the basic window properties like size, style, and start-up location -->
+
+	<!-- Window Resources -->
+	<views:BaseWindow.Resources>
+		<!-- Style for Minimize, Maximize, Close -->
+		<Style x:Key="WindowIconStyle" TargetType="{x:Type Hyperlink}">
+			<Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="Foreground" Value="#4C4C4C" />
+		</Style>
+		<!-- Defines a style for window control icons -->
+	</views:BaseWindow.Resources>
+<DockPanel>
+    <Border DockPanel.Dock="Top" Background="#E6E6E6">
+        <materialDesign:ColorZone Padding="16" Mode="PrimaryMid">
+            <!-- Close Button -->
+            <Button Margin="8,0" Height="20" Width="20" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                    Click="BtnClose_Click" >
+                <materialDesign:PackIcon Kind="WindowClose" Foreground="White"/>
+            </Button>
+        </materialDesign:ColorZone>
+    </Border>
+
+
+<!-- Main Content -->
+			<Grid Margin="15,15,15,5">
+				<!-- Defines the layout for main content -->
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="300"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Name Label -->
+				<TextBlock Grid.ColumnSpan="2" x:Name="lblTitle" Text="{Binding Name}"
+                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                           Margin="15,0,0,0" FontSize="20" FontWeight="SemiBold" Foreground="#333333"/>
+				<!-- Displays the name of the menu item -->
+
+				<!-- Image -->
+				<Rectangle Grid.Row="1" RadiusX="10" RadiusY="10">
+					<Rectangle.Fill>
+						<ImageBrush ImageSource="{Binding IconImage}" Stretch="UniformToFill"/>
+					</Rectangle.Fill>
+				</Rectangle>
+				<!-- Displays the image of the menu item -->
+
+				<!-- Description-->
+				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Description}"
+                           HorizontalAlignment="Center" FontSize="14" Foreground="#333333"
+                           Margin="5" TextWrapping="Wrap"/>
+				<!-- Provides a description of the menu item -->
+
+				<!-- Quantity -->
+				<StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center"
+                            VerticalAlignment="Center" Background="Transparent">
+					<Button Content="-" Click="DecrementQuantity_Click" Background="#E6E6E6"
+                            Foreground="#333333" BorderBrush="#E6E6E6" Width="40"/>
+                    <TextBlock x:Name="QuantityDisplay" Text="{Binding Quantity, FallbackValue=0}" Width="60"
+                               TextAlignment="Center" VerticalAlignment="Center"
+                                Foreground="#333333"/>
+					<Button Content="+" Click="IncrementQuantity_Click" Background="#E6E6E6"
+                            Foreground="#333333" BorderBrush="#E6E6E6" Width="40" />
+				</StackPanel>
+				<!-- Allows user to adjust the quantity of the menu item -->
+
+				<!-- Add to Order Button -->
+				<Button x:Name="btnAddItem" Content="Add" Grid.Row="3" Grid.Column="1"
+                        Background="#E6E6E6" Foreground="#333333" Click="AddToOrder_Click" Margin="10,0,10,0" BorderBrush="{x:Null}" />
+				<!-- Button to add the menu item to an order -->
+			</Grid>
+</DockPanel>
+</views:BaseWindow>
